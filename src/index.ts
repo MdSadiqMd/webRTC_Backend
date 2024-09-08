@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 
 import { serverConfig, logger } from './config';
+import roomHandler from './handlers/room.handler';
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,7 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     logger.info(`New User Connected: ${socket}`);
+    roomHandler(socket);
     socket.on('disconnect', () => {
         logger.info(`User Disconnected: ${socket}`);
     });
