@@ -8,14 +8,15 @@ const roomHandler = (socket: Socket) => {
         const roomId = UUIDv4();
         socket.join(roomId);
         socket.emit('room-created', { roomId });
+        logger.info(`Room Created withId: ${roomId}`);
     };
 
-    const joinRoom = () => {
-        logger.info(`New Room Joined`);
+    const joinedRoom = ({ roomId }: { roomId: string; }) => {
+        logger.info(`A New User Joined with SocketId: ${socket.id} in Room: ${roomId}`);
     };
 
-    socket.emit('create-room', createRoom);
-    socket.emit('join-room', joinRoom);
+    socket.on('create-room', createRoom);
+    socket.on('joined-room', joinedRoom);
 };
 
 export default roomHandler;

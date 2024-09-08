@@ -19,10 +19,10 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    logger.info(`New User Connected: ${socket}`);
+    logger.info(`New User Connected: ${socket.id}`);
     roomHandler(socket);
     socket.on('disconnect', () => {
-        logger.info(`User Disconnected: ${socket}`);
+        logger.info(`User Disconnected: ${socket.id}`);
     });
 });
 
