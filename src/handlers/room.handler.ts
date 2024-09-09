@@ -23,6 +23,10 @@ const roomHandler = (socket: Socket) => {
 
             logger.info(`A New User with userId: ${peerId} Joined with SocketId: ${socket.id} in Room: ${roomId}`);
 
+            socket.on('ready', () => {
+                socket.to(roomId).emit('user-joined', { peerId });
+            });
+            
             socket.emit('get-users', {
                 roomId,
                 participants: rooms[roomId]
